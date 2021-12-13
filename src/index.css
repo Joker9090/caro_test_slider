@@ -1,13 +1,82 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.CaroSlider {
+  position: relative;
+  overflow: hidden;
+}
+.CaroSlider .Slider {
+  background: rgb(30, 77, 30);
+  min-height: 500px;
+  height: 88vh;
+  width: calc(100% - 0%); /* lo cambias a piachere */
+  width: calc(100% - 30%); /* lo cambias a piachere */
+  margin-left: auto;
+}
+.CaroSlider .overBox {
+  /* display:none;*/
+  /* opacity: 0.2; */
+  width: 35%;
+  height: 100%;
+  background: black;
+  position: absolute;
+  top: 0px;
+}
+.CaroSlider .overBox:before {
+  content: " ";
+  position: absolute;
+  width: 50vw;
+  height: 120%;
+  right: 0px;
+  background: black;
+  transform: rotate(-16deg) translate(7vw, 16vh);
+}
+
+.glide__slides {
+  margin: 0px;
+}
+.CaroSlider .glide__slides .image {
+  background-size: cover;
+  background-position: center;
+  min-height: 500px;
+  height: 88vh;
+}
+
+.CaroSliderCirculo {
+  width: 70%;
+  padding-top: 50px;
+  margin-bottom: 50px;
+}
+.CaroSliderCirculo .Slider {
+}
+.CaroSliderCirculo .circle {
+  padding: 10px 0px;
+}
+.CaroSliderCirculo .image {
+  width: 136px;
+  background-position: center;
+  background-size: cover;
+  aspect-ratio: 1/1;
+  margin: auto;
+  border-radius: 100%;
+  box-shadow: 0px 0px 10px;
+}
+
+.CaroSliderCirculo .data { 
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}
+
+.CaroSliderCirculo .data p {
+  white-space: normal;
 }
