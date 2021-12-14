@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <UnderlineLink size="100" text="HOLA" />
+    <Slider />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import UnderlineLink from './components/UnderlineLink.vue'
+import Slider from './components/Slider.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    UnderlineLink,
+    Slider,
   }
 }
 </script>
