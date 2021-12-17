@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ProductMenu />
+    <ProductMenu :active="true" />
     <UnderlineLink size="100" text="HOLA" />
     <Slider />
   </div>

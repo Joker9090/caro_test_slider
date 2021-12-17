@@ -1,38 +1,41 @@
 <template>
-  <div class="ProductMenu">
-    <ul class="categories">
-      <li
-        :data-id="category.id"
-        v-for="(category, i) in categories"
-        :key="i"
-        class="show"
-        :data-image="category.image"
-      >
-        <p>{{ category.label }}</p>
-      </li>
-    </ul>
-    <ul class="subCategories">
-      <li
-        :data-id="subCategory.id"
-        :data-parentId="subCategory.parentId"
-        v-for="(subCategory, i) in subCategories"
-        :key="i"
-      >
-        <p>{{ subCategory.label }}</p>
-      </li>
-    </ul>
-    <div class="productCol">
-      <ul class="products">
+  <div class="ProductMenu" v-bind:class="{ active: active }">
+    <div class="toggleClick" />
+    <div class="MenuWrapper">
+      <ul class="categories">
         <li
-          :data-id="product.id"
-          :data-parentId="product.parentId"
-          v-for="(product, i) in products"
+          :data-id="category.id"
+          v-for="(category, i) in categories"
           :key="i"
+          class="show"
+          :data-image="category.image"
         >
-          <p>{{ product.label }}</p>
+          <p>{{ category.label }}</p>
         </li>
       </ul>
-      <div class="imageHolder" />
+      <ul class="subCategories">
+        <li
+          :data-id="subCategory.id"
+          :data-parentId="subCategory.parentId"
+          v-for="(subCategory, i) in subCategories"
+          :key="i"
+        >
+          <p>{{ subCategory.label }}</p>
+        </li>
+      </ul>
+      <div class="productCol">
+        <ul class="products">
+          <li
+            :data-id="product.id"
+            :data-parentId="product.parentId"
+            v-for="(product, i) in products"
+            :key="i"
+          >
+            <p>{{ product.label }}</p>
+          </li>
+        </ul>
+        <div class="imageHolder" />
+      </div>
     </div>
   </div>
 </template>
@@ -95,14 +98,17 @@ const products = [
 
 export default {
   name: "ProductMenu",
-  props: {},
+  props: {
+    active: Boolean,
+  },
   data: () => ({
     categories,
     subCategories,
     products,
   }),
   mounted() {
-    const changeImage = (/*url*/) => document.querySelector('.imageHolder').style.background = 'red'; // aca caro para cxambiar la iamgen por background
+    const changeImage = (/*url*/) =>
+      (document.querySelector(".imageHolder").style.background = "red"); // aca caro para cxambiar la iamgen por background
     const activeTarget = (target) => target.classList.add("active");
     const desactiveAll = (queryParam) => {
       return [...document.querySelectorAll(queryParam)].map((item) =>
@@ -163,6 +169,11 @@ export default {
       .forEach((li) =>
         li.addEventListener("mouseenter", () => hoverSubCategory(li))
       );
+
+      /* handle click*/
+    document.querySelector(".toggleClick").onclick = () => {
+       document.querySelector(".ProductMenu").classList.toggle('active');
+    };
   },
   computed: {},
 };
@@ -170,14 +181,33 @@ export default {
 
 <style scoped>
 .ProductMenu {
+  position: relative;
+}
+.ProductMenu .toggleClick {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color:green;
+  top: -50px;
+}
+.ProductMenu .MenuWrapper {
+  max-height: 0px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid grey;
   display: flex;
   justify-content: space-around;
+}
+.ProductMenu.active .MenuWrapper {
+  max-height: 70vh;
+  height: fit-content;
 }
 .ProductMenu ul {
   list-style: none;
   padding: 0;
 }
-ul.categories, ul.subCategories {
+ul.categories,
+ul.subCategories {
   width: 30%;
 }
 .productCol {
@@ -187,8 +217,8 @@ ul.categories, ul.subCategories {
 }
 .productCol .imageHolder {
   aspect-ratio: 2/1;
-  width:50%;
-  background-color:grey;
+  width: 50%;
+  background-color: grey;
 }
 ul li:not(.show) {
   display: none;
