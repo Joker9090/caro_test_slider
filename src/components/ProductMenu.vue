@@ -108,7 +108,7 @@ export default {
   }),
   mounted() {
     const changeImage = (/*url*/) =>
-      (document.querySelector(".imageHolder").style.background = "red"); // aca caro para cxambiar la iamgen por background
+      (document.querySelector(".ProductMenu .imageHolder").style.background = "red"); // aca caro para cxambiar la iamgen por background
     const activeTarget = (target) => target.classList.add("active");
     const desactiveAll = (queryParam) => {
       return [...document.querySelectorAll(queryParam)].map((item) =>
@@ -160,18 +160,18 @@ export default {
       return targetDOM;
     };
     document
-      .querySelectorAll(".categories li")
+      .querySelectorAll(".ProductMenu .categories li")
       .forEach((li) =>
         li.addEventListener("mouseenter", () => hoverCategory(li))
       );
     document
-      .querySelectorAll(".subCategories li")
+      .querySelectorAll("-ProductMenu .subCategories li")
       .forEach((li) =>
         li.addEventListener("mouseenter", () => hoverSubCategory(li))
       );
 
       /* handle click*/
-    document.querySelector(".toggleClick").onclick = () => {
+    document.querySelector(".ProductMenu .toggleClick").onclick = () => {
        document.querySelector(".ProductMenu").classList.toggle('active');
     };
   },
