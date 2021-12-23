@@ -37,6 +37,7 @@
         <div class="imageHolder" />
       </div>
     </div>
+    <script type="application/javascript" v-html="this.renderStatic()" />
   </div>
 </template>
 
@@ -95,7 +96,78 @@ const products = [
   { id: 14, parentId: 2, label: "producto 15", slug: "slug" },
   { id: 15, parentId: 2, label: "producto 16", slug: "slug" },
 ];
+// const aaa = "123123";
+const staticDomElement = () => {
+  const changeImage = (/*url*/) =>
+    (document.querySelector(".ProductMenu .imageHolder").style.background =
+      "red"); // aca caro para cxambiar la iamgen por background
+  const activeTarget = (target) => target.classList.add("active");
+  const desactiveAll = (queryParam) => {
+    return [...document.querySelectorAll(queryParam)].map((item) =>
+      item.classList.remove("active")
+    );
+  };
+  const hideAll = (queryParam) => {
+    return [...document.querySelectorAll(queryParam)].map((item) => {
+      // HACK nodeList to array for map use
+      item.classList.remove("active");
+      item.classList.remove("show");
+      return item;
+    });
+  };
+  const showAllArr = (arr) =>
+    [...arr].map((item) => item.classList.add("show"));
+  const getId = (target) => target.getAttribute("data-id");
+  const getParentId = (target) => target.getAttribute("data-parentId");
+  const getOnlyChildren = (arr, id) =>
+    arr.filter((item) => getParentId(item) == id);
 
+  const hoverCategory = (targetDOM) => {
+    // desactiva todas las categories, y solo activa una
+    desactiveAll(".categories li");
+    activeTarget(targetDOM);
+
+    // image for future
+    const image = targetDOM.getAttribute("data-image");
+    console.log("image", image);
+    changeImage(image);
+
+    // esconde tambien todos los productos
+    hideAll(".products li");
+
+    // esconde todas las subCategories y solo muestra las que tienen el mismo parentId
+    const hidenItems = hideAll(".subCategories li");
+    const onlyChildrenItems = getOnlyChildren(hidenItems, getId(targetDOM));
+    const shownedItems = showAllArr(onlyChildrenItems);
+    console.log("shownedItems", shownedItems);
+    return targetDOM;
+  };
+
+  const hoverSubCategory = (targetDOM) => {
+    // desactiva todas las subcategories, y solo activa una
+    desactiveAll(".subCategories li");
+    activeTarget(targetDOM);
+
+    // esconde todas los productos y solo muestra las que tienen el mismo parentId
+    showAllArr(getOnlyChildren(hideAll(".products li"), getId(targetDOM)));
+    return targetDOM;
+  };
+  document
+    .querySelectorAll(".ProductMenu .categories li")
+    .forEach((li) =>
+      li.addEventListener("mouseenter", () => hoverCategory(li))
+    );
+  document
+    .querySelectorAll("-ProductMenu .subCategories li")
+    .forEach((li) =>
+      li.addEventListener("mouseenter", () => hoverSubCategory(li))
+    );
+
+  /* handle click*/
+  document.querySelector(".ProductMenu .toggleClick").onclick = () => {
+    document.querySelector(".ProductMenu").classList.toggle("active");
+  };
+};
 export default {
   name: "ProductMenu",
   props: {
@@ -106,74 +178,16 @@ export default {
     subCategories,
     products,
   }),
+  methods: {
+    renderStatic: () => {
+      return `
+        ${staticDomElement.toString()}
+        staticDomElement();
+      `;
+    },
+  },
   mounted() {
-    const changeImage = (/*url*/) =>
-      (document.querySelector(".ProductMenu .imageHolder").style.background = "red"); // aca caro para cxambiar la iamgen por background
-    const activeTarget = (target) => target.classList.add("active");
-    const desactiveAll = (queryParam) => {
-      return [...document.querySelectorAll(queryParam)].map((item) =>
-        item.classList.remove("active")
-      );
-    };
-    const hideAll = (queryParam) => {
-      return [...document.querySelectorAll(queryParam)].map((item) => {
-        // HACK nodeList to array for map use
-        item.classList.remove("active");
-        item.classList.remove("show");
-        return item;
-      });
-    };
-    const showAllArr = (arr) =>
-      [...arr].map((item) => item.classList.add("show"));
-    const getId = (target) => target.getAttribute("data-id");
-    const getParentId = (target) => target.getAttribute("data-parentId");
-    const getOnlyChildren = (arr, id) =>
-      arr.filter((item) => getParentId(item) == id);
-
-    const hoverCategory = (targetDOM) => {
-      // desactiva todas las categories, y solo activa una
-      desactiveAll(".categories li");
-      activeTarget(targetDOM);
-
-      // image for future
-      const image = targetDOM.getAttribute("data-image");
-      console.log("image", image);
-      changeImage(image);
-
-      // esconde tambien todos los productos
-      hideAll(".products li");
-
-      // esconde todas las subCategories y solo muestra las que tienen el mismo parentId
-      const hidenItems = hideAll(".subCategories li");
-      const onlyChildrenItems = getOnlyChildren(hidenItems, getId(targetDOM));
-      const shownedItems = showAllArr(onlyChildrenItems);
-      console.log("shownedItems", shownedItems);
-      return targetDOM;
-    };
-    const hoverSubCategory = (targetDOM) => {
-      // desactiva todas las subcategories, y solo activa una
-      desactiveAll(".subCategories li");
-      activeTarget(targetDOM);
-
-      // esconde todas los productos y solo muestra las que tienen el mismo parentId
-      showAllArr(getOnlyChildren(hideAll(".products li"), getId(targetDOM)));
-      return targetDOM;
-    };
-    document
-      .querySelectorAll(".ProductMenu .categories li")
-      .forEach((li) =>
-        li.addEventListener("mouseenter", () => hoverCategory(li))
-      );
-    document
-      .querySelectorAll("-ProductMenu .subCategories li")
-      .forEach((li) =>
-        li.addEventListener("mouseenter", () => hoverSubCategory(li))
-      );
-
-      /* handle click*/
-    document.querySelector(".ProductMenu .toggleClick").onclick = () => {
-       document.querySelector(".ProductMenu").classList.toggle('active');
-    };
+   //staticDomElement()
   },
   computed: {},
 };
@@ -187,7 +201,7 @@ export default {
   position: absolute;
   width: 50px;
   height: 50px;
-  background-color:green;
+  background-color: green;
   top: -50px;
 }
 .ProductMenu .MenuWrapper {

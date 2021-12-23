@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <ProductMenu :active="true" />
-    <ProductMenuMobile :active="true" />
+    <ProductsSection />
+    <ProductMenu :active="false" />
+    <ProductMenuMobile :active="false" />
     <UnderlineLink size="100" text="HOLA" />
     <Slider />
   </div>
@@ -12,6 +13,7 @@ import UnderlineLink from './components/UnderlineLink.vue'
 import Slider from './components/Slider.vue'
 import ProductMenu from './components/ProductMenu.vue'
 import ProductMenuMobile from './components/ProductMenuMobile.vue'
+import ProductsSection from './components/ProductsSection.vue'
 
 export default {
   name: 'App',
@@ -20,6 +22,7 @@ export default {
     Slider,
     ProductMenu,
     ProductMenuMobile,
+    ProductsSection,
   }
 }
 </script>
