@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <BannerSlider />
     <ProductsSection />
     <ProductMenu :active="false" />
     <ProductMenuMobile :active="false" />
@@ -14,10 +15,12 @@ import Slider from './components/Slider.vue'
 import ProductMenu from './components/ProductMenu.vue'
 import ProductMenuMobile from './components/ProductMenuMobile.vue'
 import ProductsSection from './components/ProductsSection.vue'
+import BannerSlider from './components/BannerSlider.vue'
 
 export default {
   name: 'App',
   components: {
+    BannerSlider,
     UnderlineLink,
     Slider,
     ProductMenu,
